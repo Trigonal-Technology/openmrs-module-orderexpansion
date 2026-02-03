@@ -308,4 +308,101 @@
         </insert>
     </changeSet>
 
+    <changeSet id="${project.parent.artifactId}-20260203-add-radiology-order-type" author="Pravin Timalsina">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM order_type WHERE uuid = 'c19c8e82-8b8d-4b4e-b1ff-3f09890b2db3'
+            </sqlCheck>
+        </preConditions>
+        <comment>
+            Insert Radiology Order order_type required for radiology orders handled by the Order Expansion module
+        </comment>
+        <insert tableName="order_type">
+            <column name="order_type_id" valueNumeric="11"/>
+            <column name="name" value="Radiology Order"/>
+            <column name="description" value="Order type for radiology-related diagnostics"/>
+            <column name="creator" valueNumeric="1"/>
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
+            <column name="retired" valueBoolean="false"/>
+            <column name="date_retired"/>
+            <column name="retire_reason"/>
+            <column name="uuid" value="c19c8e82-8b8d-4b4e-b1ff-3f09890b2db3"/>
+            <column name="java_class_name" value="org.openmrs.module.orderexpansion.api.model.RadiologyOrder"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="${project.parent.artifactId}-20260203-update-radiology-order-type-class" author="Pravin Timalsina">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1">
+                SELECT COUNT(*) FROM order_type WHERE uuid = 'c19c8e82-8b8d-4b4e-b1ff-3f09890b2db3'
+            </sqlCheck>
+        </preConditions>
+        <comment>
+            Point Radiology Order order_type to the RadiologyOrder class provided by the Order Expansion module
+        </comment>
+        <update tableName="order_type">
+            <column name="java_class_name" value="org.openmrs.module.orderexpansion.api.model.RadiologyOrder"/>
+            <where>uuid = 'c19c8e82-8b8d-4b4e-b1ff-3f09890b2db3'</where>
+        </update>
+    </changeSet>
+
+    <changeSet id="${project.parent.artifactId}-20260203-create-radiology-order-table" author="Pravin Timalsina">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="radiology_order"/>
+            </not>
+        </preConditions>
+        <comment>Create radiology_order table for RadiologyOrder subclass</comment>
+        <createTable tableName="radiology_order">
+            <column name="order_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="body_site" type="int"/>
+            <column name="modality" type="int"/>
+            <column name="specimen_source" type="int"/>
+            <column name="study_uuid" type="varchar(255)"/>
+            <column name="laterality" type="varchar(20)"/>
+            <column name="clinical_history" type="text"/>
+            <column name="frequency" type="int"/>
+            <column name="number_of_repeats" type="int"/>
+            <column name="location" type="int"/>
+            <column name="radiology_status" type="varchar(20)" defaultValue="PENDING"/>
+            <column name="related_radiology_order_id" type="int"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="radiology_order_order_id_fk"
+                                 baseTableName="radiology_order" baseColumnNames="order_id"
+                                 referencedTableName="orders" referencedColumnNames="order_id"/>
+        <addForeignKeyConstraint constraintName="radiology_order_body_site_fk"
+                                 baseTableName="radiology_order" baseColumnNames="body_site"
+                                 referencedTableName="concept" referencedColumnNames="concept_id"/>
+        <addForeignKeyConstraint constraintName="radiology_order_specimen_source_fk"
+                                 baseTableName="radiology_order" baseColumnNames="specimen_source"
+                                 referencedTableName="concept" referencedColumnNames="concept_id"/>
+        <addForeignKeyConstraint constraintName="radiology_order_frequency_fk"
+                                 baseTableName="radiology_order" baseColumnNames="frequency"
+                                 referencedTableName="order_frequency" referencedColumnNames="order_frequency_id"/>
+        <addForeignKeyConstraint constraintName="radiology_order_location_fk"
+                                 baseTableName="radiology_order" baseColumnNames="location"
+                                 referencedTableName="concept" referencedColumnNames="concept_id"/>
+        <addForeignKeyConstraint constraintName="radiology_order_related_radiology_fk"
+                                 baseTableName="radiology_order" baseColumnNames="related_radiology_order_id"
+                                 referencedTableName="radiology_order" referencedColumnNames="order_id"/>
+        <addForeignKeyConstraint constraintName="radiology_order_modality_fk"
+                                 baseTableName="radiology_order" baseColumnNames="modality"
+                                 referencedTableName="concept" referencedColumnNames="concept_id"/>
+
+        <createIndex indexName="radiology_order_frequency_index" tableName="radiology_order">
+            <column name="frequency"/>
+        </createIndex>
+        <createIndex indexName="radiology_order_specimen_source_index" tableName="radiology_order">
+            <column name="specimen_source"/>
+        </createIndex>
+        <createIndex indexName="radiology_order_study_uuid_index" tableName="radiology_order">
+            <column name="study_uuid"/>
+        </createIndex>
+    </changeSet>
+
+    <include file="orderexpansion_radiology_data.xml"/>
+
 </databaseChangeLog>
