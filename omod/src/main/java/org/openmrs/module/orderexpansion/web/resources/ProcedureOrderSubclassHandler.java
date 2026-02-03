@@ -35,6 +35,7 @@ import org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingSubcl
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceDescription;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingSubclassHandler;
 import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOperationException;
+import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs2_2.OrderResource2_2;
 
 @SubClassHandler(supportedClass = ProcedureOrder.class, supportedOpenmrsVersions = { "2.6.* - 9.*" })
 public class ProcedureOrderSubclassHandler extends BaseDelegatingSubclassHandler<Order, ProcedureOrder> implements DelegatingSubclassHandler<Order, ProcedureOrder> {
@@ -56,14 +57,14 @@ public class ProcedureOrderSubclassHandler extends BaseDelegatingSubclassHandler
 	
 	@Override
 	public DelegatingResourceDescription getUpdatableProperties() throws ResourceDoesNotSupportOperationException {
-		OrderResource2_3 orderResource = (OrderResource2_3) Context.getService(RestService.class)
+		OrderResource2_2 orderResource = (OrderResource2_2) Context.getService(RestService.class)
 		        .getResourceBySupportedClass(Order.class);
 		return orderResource.getUpdatableProperties();
 	}
 	
 	@PropertyGetter("display")
 	public static String getDisplay(ProcedureOrder delegate) {
-		OrderResource2_3 orderResource = (OrderResource2_3) Context.getService(RestService.class)
+		OrderResource2_2 orderResource = (OrderResource2_2) Context.getService(RestService.class)
 		        .getResourceBySupportedClass(Order.class);
 		return orderResource.getDisplayString(delegate);
 	}
@@ -71,7 +72,7 @@ public class ProcedureOrderSubclassHandler extends BaseDelegatingSubclassHandler
 	@Override
 	public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
 		if (rep instanceof DefaultRepresentation) {
-			OrderResource2_3 orderResource = (OrderResource2_3) Context.getService(RestService.class)
+			OrderResource2_2 orderResource = (OrderResource2_2) Context.getService(RestService.class)
 			        .getResourceBySupportedClass(Order.class);
 			DelegatingResourceDescription d = orderResource.getRepresentationDescription(rep);
 			d.addProperty("specimenSource", Representation.REF);
@@ -86,7 +87,7 @@ public class ProcedureOrderSubclassHandler extends BaseDelegatingSubclassHandler
 			d.addProperty("category", Representation.REF);
 			return d;
 		} else if (rep instanceof FullRepresentation) {
-			OrderResource2_3 orderResource = (OrderResource2_3) Context.getService(RestService.class)
+			OrderResource2_2 orderResource = (OrderResource2_2) Context.getService(RestService.class)
 			        .getResourceBySupportedClass(Order.class);
 			DelegatingResourceDescription d = orderResource.getRepresentationDescription(rep);
 			d.addProperty("specimenSource", Representation.FULL);
@@ -119,7 +120,7 @@ public class ProcedureOrderSubclassHandler extends BaseDelegatingSubclassHandler
 	
 	@Override
 	public DelegatingResourceDescription getCreatableProperties() {
-		OrderResource2_3 orderResource = (OrderResource2_3) Context.getService(RestService.class)
+		OrderResource2_2 orderResource = (OrderResource2_2) Context.getService(RestService.class)
 		        .getResourceBySupportedClass(Order.class);
 		DelegatingResourceDescription d = orderResource.getCreatableProperties();
 		d.addProperty("specimenSource");
@@ -139,7 +140,7 @@ public class ProcedureOrderSubclassHandler extends BaseDelegatingSubclassHandler
 	
 	@Override
 	public Model getGETModel(Representation rep) {
-		OrderResource2_3 orderResource = (OrderResource2_3) Context.getService(RestService.class)
+		OrderResource2_2 orderResource = (OrderResource2_2) Context.getService(RestService.class)
 		        .getResourceBySupportedClass(Order.class);
 		ModelImpl orderModel = (ModelImpl) orderResource.getGETModel(rep);
 		orderModel.property("laterality", new EnumProperty(ProcedureOrder.Laterality.class))
@@ -160,7 +161,7 @@ public class ProcedureOrderSubclassHandler extends BaseDelegatingSubclassHandler
 	
 	@Override
 	public Model getCREATEModel(Representation rep) {
-		OrderResource2_3 orderResource = (OrderResource2_3) Context.getService(RestService.class)
+		OrderResource2_2 orderResource = (OrderResource2_2) Context.getService(RestService.class)
 		        .getResourceBySupportedClass(Order.class);
 		ModelImpl orderModel = (ModelImpl) orderResource.getCREATEModel(rep);
 		return orderModel.property("specimenSource", new StringProperty().example("uuid"))

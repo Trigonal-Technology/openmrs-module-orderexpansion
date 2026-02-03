@@ -268,5 +268,44 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="${project.parent.artifactId}-20260202-add-procedure-order-type" author="Pravin Timalsina">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM order_type WHERE uuid = '4237a01f-29c5-4167-9d8e-96d6e590aa33'
+            </sqlCheck>
+        </preConditions>
+        <comment>
+            Insert Procedure Order order_type required by the Order Expansion module
+        </comment>
+        <insert tableName="order_type">
+            <column name="name" value="Procedure Order"/>
+            <column name="description" value="Order type for procedures created by the Order Expansion module"/>
+            <column name="creator" valueNumeric="1"/>
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
+            <column name="retired" valueBoolean="false"/>
+            <column name="uuid" value="4237a01f-29c5-4167-9d8e-96d6e590aa33"/>
+            <column name="java_class_name" value="org.openmrs.module.orderexpansion.api.model.ProcedureOrder"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="${project.parent.artifactId}-20260202-add-medical-supply-order-type" author="Pravin Timalsina">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT COUNT(*) FROM order_type WHERE uuid = 'dab3ab30-2feb-48ec-b4af-8332a0831b49'
+            </sqlCheck>
+        </preConditions>
+        <comment>
+            Insert Medical Supply Order order_type required by the Order Expansion module
+        </comment>
+        <insert tableName="order_type">
+            <column name="name" value="Medical Supply Order"/>
+            <column name="description" value="Order type for medical supplies created by the Order Expansion module"/>
+            <column name="creator" valueNumeric="1"/>
+            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
+            <column name="retired" valueBoolean="false"/>
+            <column name="uuid" value="dab3ab30-2feb-48ec-b4af-8332a0831b49"/>
+            <column name="java_class_name" value="org.openmrs.module.orderexpansion.api.model.MedicalSupplyOrder"/>
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>
