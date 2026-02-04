@@ -411,6 +411,4 @@
         <dropColumn tableName="radiology_order" columnName="modality"/>
     </changeSet>
 
-    <include file="orderexpansion_radiology_data.xml"/>
-
 </databaseChangeLog>
