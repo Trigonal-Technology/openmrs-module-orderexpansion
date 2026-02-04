@@ -358,7 +358,6 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="body_site" type="int"/>
-            <column name="modality" type="int"/>
             <column name="specimen_source" type="int"/>
             <column name="study_uuid" type="varchar(255)"/>
             <column name="laterality" type="varchar(20)"/>
@@ -388,9 +387,6 @@
         <addForeignKeyConstraint constraintName="radiology_order_related_radiology_fk"
                                  baseTableName="radiology_order" baseColumnNames="related_radiology_order_id"
                                  referencedTableName="radiology_order" referencedColumnNames="order_id"/>
-        <addForeignKeyConstraint constraintName="radiology_order_modality_fk"
-                                 baseTableName="radiology_order" baseColumnNames="modality"
-                                 referencedTableName="concept" referencedColumnNames="concept_id"/>
 
         <createIndex indexName="radiology_order_frequency_index" tableName="radiology_order">
             <column name="frequency"/>
@@ -401,6 +397,18 @@
         <createIndex indexName="radiology_order_study_uuid_index" tableName="radiology_order">
             <column name="study_uuid"/>
         </createIndex>
+    </changeSet>
+
+    <changeSet id="${project.parent.artifactId}-20260204-drop-radiology-modality-column" author="Pravin Timalsina">
+        <preConditions onError="WARN" onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="radiology_order"/>
+                <columnExists tableName="radiology_order" columnName="modality"/>
+            </and>
+        </preConditions>
+        <comment>Drop obsolete modality column and foreign key from radiology_order</comment>
+        <dropForeignKeyConstraint baseTableName="radiology_order" constraintName="radiology_order_modality_fk"/>
+        <dropColumn tableName="radiology_order" columnName="modality"/>
     </changeSet>
 
     <include file="orderexpansion_radiology_data.xml"/>

@@ -77,7 +77,6 @@ public class RadiologyOrderSubclassHandler extends BaseDelegatingSubclassHandler
 			d.addProperty("frequency", Representation.REF);
 			d.addProperty("numberOfRepeats");
 			d.addProperty("bodySite", Representation.REF);
-			d.addProperty("modality", Representation.REF);
 			d.addProperty("studyUuid");
 			d.addProperty("radiologyStatus");
 			d.addProperty("relatedRadiologyOrder", Representation.REF);
@@ -92,7 +91,6 @@ public class RadiologyOrderSubclassHandler extends BaseDelegatingSubclassHandler
 			d.addProperty("frequency", Representation.DEFAULT);
 			d.addProperty("numberOfRepeats");
 			d.addProperty("bodySite", Representation.FULL);
-			d.addProperty("modality", Representation.FULL);
 			d.addProperty("studyUuid");
 			d.addProperty("radiologyStatus");
 			d.addProperty("relatedRadiologyOrder", Representation.FULL);
@@ -109,6 +107,7 @@ public class RadiologyOrderSubclassHandler extends BaseDelegatingSubclassHandler
 		OrderResource2_5 orderResource = (OrderResource2_5) Context.getService(RestService.class)
 		        .getResourceBySupportedClass(Order.class);
 		DelegatingResourceDescription d = orderResource.getCreatableProperties();
+		
 		d.addProperty("specimenSource");
 		d.addProperty("laterality");
 		d.addProperty("clinicalHistory");
@@ -116,7 +115,6 @@ public class RadiologyOrderSubclassHandler extends BaseDelegatingSubclassHandler
 		d.addProperty("numberOfRepeats");
 		d.addProperty("orderType");
 		d.addProperty("bodySite");
-		d.addProperty("modality");
 		d.addProperty("studyUuid");
 		d.addProperty("radiologyStatus");
 		d.addProperty("commentToFulfiller");
@@ -153,7 +151,6 @@ public class RadiologyOrderSubclassHandler extends BaseDelegatingSubclassHandler
 		        .getResourceBySupportedClass(Order.class);
 		ModelImpl orderModel = (ModelImpl) orderResource.getCREATEModel(rep);
 		return orderModel.property("specimenSource", new StringProperty().example("uuid"))
-		        .property("modality", new StringProperty().example("uuid"))
 		        .property("laterality", new EnumProperty(ServiceOrder.Laterality.class))
 		        .property("radiologyStatus", new EnumProperty(RadiologyOrderStatus.class))
 		        .property("clinicalHistory", new StringProperty())

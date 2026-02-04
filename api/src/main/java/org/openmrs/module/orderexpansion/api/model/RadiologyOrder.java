@@ -13,8 +13,6 @@ public class RadiologyOrder extends ServiceOrder {
 	
 	private Concept bodySite;
 	
-	private Concept modality;
-	
 	private Concept specimenSource;
 	
 	private String studyUuid;
@@ -70,14 +68,6 @@ public class RadiologyOrder extends ServiceOrder {
 	
 	public void setBodySite(Concept bodySite) {
 		this.bodySite = bodySite;
-	}
-	
-	public Concept getModality() {
-		return modality;
-	}
-	
-	public void setModality(Concept modality) {
-		this.modality = modality;
 	}
 	
 	public Concept getSpecimenSource() {
