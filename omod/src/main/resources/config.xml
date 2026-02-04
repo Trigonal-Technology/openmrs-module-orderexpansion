@@ -24,6 +24,7 @@
 	<mappingFiles>
 		ProcedureOrder.hbm.xml
 		MedicalSupplyOrder.hbm.xml
+		RadiologyOrder.hbm.xml
 	</mappingFiles>
 
 	<messages>
