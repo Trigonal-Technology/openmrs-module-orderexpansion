@@ -281,7 +281,7 @@
             <column name="name" value="Procedure Order"/>
             <column name="description" value="Order type for procedures created by the Order Expansion module"/>
             <column name="creator" valueNumeric="1"/>
-            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
+            <column name="date_created" valueComputed="CURRENT_TIMESTAMP"/>
             <column name="retired" valueBoolean="false"/>
             <column name="uuid" value="4237a01f-29c5-4167-9d8e-96d6e590aa33"/>
             <column name="java_class_name" value="org.openmrs.module.orderexpansion.api.model.ProcedureOrder"/>
@@ -301,7 +301,7 @@
             <column name="name" value="Medical Supply Order"/>
             <column name="description" value="Order type for medical supplies created by the Order Expansion module"/>
             <column name="creator" valueNumeric="1"/>
-            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
+            <column name="date_created" valueComputed="CURRENT_TIMESTAMP"/>
             <column name="retired" valueBoolean="false"/>
             <column name="uuid" value="dab3ab30-2feb-48ec-b4af-8332a0831b49"/>
             <column name="java_class_name" value="org.openmrs.module.orderexpansion.api.model.MedicalSupplyOrder"/>
@@ -318,11 +318,10 @@
             Insert Radiology Order order_type required for radiology orders handled by the Order Expansion module
         </comment>
         <insert tableName="order_type">
-            <column name="order_type_id" valueNumeric="11"/>
             <column name="name" value="Radiology Order"/>
             <column name="description" value="Order type for radiology-related diagnostics"/>
             <column name="creator" valueNumeric="1"/>
-            <column name="date_created" valueDate="CURRENT_TIMESTAMP"/>
+            <column name="date_created" valueComputed="CURRENT_TIMESTAMP"/>
             <column name="retired" valueBoolean="false"/>
             <column name="date_retired"/>
             <column name="retire_reason"/>
